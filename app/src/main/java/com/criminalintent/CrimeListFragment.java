@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.Date;
@@ -139,7 +140,7 @@ public class CrimeListFragment extends Fragment {
         this.mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
 
         //Indico el recyclerview como se van a disponer las view
-        this.mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.mCrimeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
 
         //Obtengo un crimelab
         CrimeLab crimeLab = CrimeLab.get(getActivity());
