@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+
+        android:id="@+id/textView_User"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:padding="@dimen/padding_title_user"
+        android:text="@string/add_user_text_view"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_title_user"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_User">
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="right|center_vertical"
+            android:padding="@dimen/margin_vertical_log_in"
+            android:text="@string/idusuario_text_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item"
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:id="@+id/user_text_view_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/margin_vertical_log_in"
+            android:text="@string/exampleuser_text_view_usuario"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_user">
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="right|center_vertical"
+            android:padding="@dimen/margin_vertical_log_in"
+            android:text="@string/name_text_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item"
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:id="@+id/name_text_view_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/margin_vertical_log_in"
+            android:text="@string/examplename_text_view_usuario"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_name">
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="right|center_vertical"
+            android:padding="@dimen/margin_vertical_log_in"
+            android:text="@string/email_text_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item"
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:id="@+id/email_text_view_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/margin_vertical_log_in"
+            android:text="@string/exampleemail_text_view_usuario"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_email">
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="right|center_vertical"
+            android:padding="@dimen/margin_vertical_log_in"
+            android:text="@string/password_text_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item"
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:id="@+id/password_text_view_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/margin_vertical_log_in"
+            android:text="@string/examplepassword_text_view_usuario"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_password">
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:fontFamily="serif"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/padding_text_user"
+            android:text="@string/photo_text_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item"
+            android:textStyle="bold"/>
+
+        <ImageButton
+
+            android:id="@+id/image_button_select_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher_round"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:fontFamily="serif"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/padding_text_user"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout_type_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_img">
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:gravity="right|center_vertical"
+            android:padding="@dimen/margin_vertical_log_in"
+            android:text="@string/idrol_text_view"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_item"
+            android:textStyle="bold" />
+
+        <LinearLayout
+
+            android:id="@+id/linearLayout_selection_checkout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <CheckBox
+
+                android:id="@+id/client_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_type_client"/>
+
+            <CheckBox
+
+                android:id="@+id/client_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_type_org"/>
+
+            <CheckBox
+
+                android:id="@+id/client_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_type_admin"/>
+
+            <CheckBox
+
+                android:id="@+id/client_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_type_org_admin"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="@string/button_Save"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:drawableLeft="@drawable/ic_save"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

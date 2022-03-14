@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/user_view"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:padding="@dimen/padding_item_recycler_view">
+
+    <TextView
+
+        android:id="@+id/user_title"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/user_name_recycler_view"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_item"
+        android:padding="@dimen/padding_recycler_view_user"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+
+        android:id="@+id/rol_title"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="@string/user_rol_recycler_view"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_item"
+        android:padding="@dimen/padding_recycler_view_user"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_title" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

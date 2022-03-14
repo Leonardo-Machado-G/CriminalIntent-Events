@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">CriminalIntent</string>
+    <string name="crime_title_hint">Enter a title for the crime</string>
+    <string name="crime_title_label">Title</string>
+    <string name="crime_details_label">Details</string>
+    <string name="date_picker_title">Date of Crime</string>
+    <string name="crime_solved_label">Solved</string>
+    <string name="new_crime">New Crime</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d crime</item>
+        <item quantity="other">%1$d crimes</item>
+    </plurals>
+    <string name="crime_suspect_text">Choose Suspect</string>
+    <string name="crime_report_text">Send Crime Report</string>
+    <string name="crime_report">%1$s!
+        The crime was discovered on %2$s. %3$s, and %4$s
+    </string>
+    <string name="crime_report_solved">The case is solved</string>
+    <string name="crime_report_unsolved">The case is not solved</string>
+    <string name="crime_report_no_suspect">there is no suspect</string>
+    <string name="crime_report_suspect">the suspect is %s.</string>
+    <string name="crime_report_subject">CriminalIntent Crime Report</string>
+    <string name="send_report">Send Crime report via</string>
+    <string name="button_final">End</string>
+    <string name="button_start">Start</string>
+    <string name="time_picker_title">Time of Crime</string>
+    <string name="no_crimes">There are no crimes</string>
+    <string name="delete_crime">Delete crime</string>
+    <string name="crime_suspect_label" />
+    <string name="crime_suspect_edit_text">Enter the name of the suspect</string>
+    <string name="text_view_password">PASSWORD:</string>
+    <string name="edit_text_hint_password">ENTER PASSWORD</string>
+    <string name="edit_text_hint_email">ENTER EMAIL</string>
+    <string name="button_text_log_in">LOG IN:</string>
+    <string name="idusuario_text_view">IDUSER:</string>
+    <string name="exampleuser_text_view_usuario">EXAMPLE USER</string>
+    <string name="name_text_view">NAME:</string>
+    <string name="examplename_text_view_usuario">EXAMPLE NAME</string>
+    <string name="email_text_view">EMAIL:</string>
+    <string name="exampleemail_text_view_usuario">EXAMPLE EMAIL</string>
+    <string name="password_text_view">PASSWORD:</string>
+    <string name="examplepassword_text_view_usuario">EXAMPLE PASSWORD</string>
+    <string name="add_user_text_view">ADD USER</string>
+    <string name="photo_text_view">PHOTO:</string>
+    <string name="idrol_text_view">IDROL:</string>
+    <string name="text_view_profile_text">PROFILE</string>
+    <string name="name_surname_text_view">NAME AND SURNAME:</string>
+    <string name="example_surname_name">EXAMPLE NAME USERNAME</string>
+    <string name="button_Save">SAVE</string>
+    <string name="text_view_type_client">CLIENT</string>
+    <string name="text_view_type_org">ORG</string>
+    <string name="text_view_type_admin">ADMIN</string>
+    <string name="text_view_type_org_admin">ORG-ADMIN</string>
+    <string name="user_name_recycler_view">USER NAME</string>
+    <string name="user_rol_recycler_view">USER ROL</string>
+    <string name="crime_title_recycler_view">Crime Title</string>
+    <string name="crime_date_recycler_view">Crime Date</string>
+    <string name="user_list_fragment_tab">User list</string>
+
+</resources>
