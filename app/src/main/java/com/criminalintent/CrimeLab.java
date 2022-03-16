@@ -28,7 +28,7 @@ public class CrimeLab {
         this.mContext = context.getApplicationContext();
 
         //En la llamada al metodo getWritableDatabase, CrimeBaseHelper hace:
-        //1ºAbre /data/data/com.jcarlosprofesor.android.criminalintent/databases/crimeBase.db
+        //1ºAbre /data/data/com.criminalintent/databases/crimeBase.db
         //2º Si es la primera vez que se crea la base de datos llama a onCreate(SQLiteDataBase)
         //3º Si no es la primera vez, comprueba el numero de versión en la base de datos
         //si el número de versión en CrimeOpenHelper es mayor, llama a onUpgrade y lo actualiza
@@ -36,14 +36,19 @@ public class CrimeLab {
 
     }
 
-    //Metodo para devolver una lista con crimes
-    public List<Crime> getCrimes(){
+    //Metodo para devolver una lista de objects
+    public List<Object>getList(String nameTable){
 
         //Instanciamos una lista vacia
-        List<Crime> crimes = new ArrayList<>();
+        List<Object> elements = null;
+        if(nameTable.equals("crimes")){
+            elements = new ArrayList<>();
+        } else if(nameTable.equals("users")){
+            elements = new ArrayList<>();
+        }
 
         //Instanciamos un cursor para desplazarnos por la tabla
-        CrimeCursorWrapper cursor = queryCrimes(null,null);
+        CrimeCursorWrapper cursor = queryCrimes(nameTable,null,null);
 
         try {
 
@@ -54,23 +59,27 @@ public class CrimeLab {
             while (!cursor.isAfterLast()) {
 
                 //Añado un crime y me desplazo al siguiente
-                crimes.add(cursor.getCrime());
+                elements.add(nameTable.equals("crimes") ? cursor.getCrime() :
+                        nameTable.equals("users")  ? cursor.getUser()  :
+                                                    cursor.getCrime());
                 cursor.moveToNext();
 
             }
 
         }finally {cursor.close();}
-        return crimes;
+        return elements;
 
     }
 
-    //Metodo para obtener un crime
-    public Crime getCrime(UUID id){
+    //Metodo para obtener un object
+    public Object getObject(UUID id, String nameTable){
 
         //Instancio un wrapper y obtengo los resultados de la condicion
-        CrimeCursorWrapper cursor = queryCrimes(
-                CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",
-                new String[] {id.toString()}
+        CrimeCursorWrapper cursor = queryCrimes(nameTable,
+                                                nameTable.equals("crimes")?CrimeDbSchema.CrimeTable.Cols.UUID + " = ?":
+                                                nameTable.equals("users") ?CrimeDbSchema.UserTable.Cols.UUID + " = ?" :
+                                                                           CrimeDbSchema.UserTable.Cols.UUID + " = ?",
+                                                new String[] {id.toString()}
         );
 
         try{
@@ -81,8 +90,10 @@ public class CrimeLab {
             //Desplazamos el cursor a la primera fila
             cursor.moveToFirst();
 
-            //Llamamos al cursor para devolver el crime
-            return cursor.getCrime();
+            //Llamamos al cursor para devolver un object
+            return (nameTable.equals("crimes")? cursor.getCrime() :
+                    nameTable.equals("users")?  cursor.getUser() :
+                                                cursor.getUser());
 
         }finally {cursor.close();}
 
@@ -93,67 +104,129 @@ public class CrimeLab {
         return sCrimeLab = sCrimeLab == null ? new CrimeLab(context) : sCrimeLab;
     }
 
-    //Metodo que se encarga de pasar un Crime a una instancia de ContentValues
-    private static ContentValues getContentValues(Crime crime){
+    //Metodo que se encarga de pasar un Crime o User a una instancia de ContentValues
+    private static ContentValues getContentValues(Crime crime, User user){
+
+        //Instancio un object contentvalues
         ContentValues values = new ContentValues();
-        values.put(CrimeDbSchema.CrimeTable.Cols.UUID, crime.getId().toString());
-        values.put(CrimeDbSchema.CrimeTable.Cols.TITLE,crime.getTitle());
-        values.put(CrimeDbSchema.CrimeTable.Cols.DATE,crime.getDate().getTime());
-        values.put(CrimeDbSchema.CrimeTable.Cols.SOLVED,crime.isSolved() ?1:0);
-        values.put(CrimeDbSchema.CrimeTable.Cols.SUSPECT, crime.getSuspect());
+
+        //En funcion de los parametros rellenamos values de una forma u otra
+        if(crime != null && user == null){
+
+            values.put(CrimeDbSchema.CrimeTable.Cols.UUID, crime.getId().toString());
+            values.put(CrimeDbSchema.CrimeTable.Cols.TITLE,crime.getTitle());
+            values.put(CrimeDbSchema.CrimeTable.Cols.DATE,crime.getDate().getTime());
+            values.put(CrimeDbSchema.CrimeTable.Cols.SOLVED,crime.isSolved() ? 1 : 0);
+            values.put(CrimeDbSchema.CrimeTable.Cols.SUSPECT, crime.getSuspect());
+
+        } else if (user != null && crime == null){
+
+            values.put(CrimeDbSchema.UserTable.Cols.UUID, user.getIdUser().toString());
+            values.put(CrimeDbSchema.UserTable.Cols.TYPEUSER,
+                        user.getTypeUser() == TypeUser.TYPE_CLIENT ?    TypeUser.TYPE_CLIENT.name() :
+                        user.getTypeUser() == TypeUser.TYPE_ADMIN ?     TypeUser.TYPE_ADMIN.name() :
+                        user.getTypeUser() == TypeUser.TYPE_ORG ?       TypeUser.TYPE_ORG.name() :
+                        user.getTypeUser() == TypeUser.TYPE_ORG_ADMIN ? TypeUser.TYPE_ORG_ADMIN.name() :
+                                                                        TypeUser.TYPE_CLIENT.name() );
+
+            values.put(CrimeDbSchema.UserTable.Cols.NAME, user.getNameUser());
+            values.put(CrimeDbSchema.UserTable.Cols.EMAIL, user.getEmailUser());
+            values.put(CrimeDbSchema.UserTable.Cols.PASSWORD, user.getEmailUser());
+            values.put(CrimeDbSchema.UserTable.Cols.PHOTO, user.getPhotoUser());
+
+        }
+
         return values;
+
     }
 
-    //Metodo para añadir un Crime
-    public void addCrime(Crime c){
+    //Metodo para añadir un Crime o User
+    public void addObject(Crime crime, User user){
 
         //Mediante ContentValues añadimos filas en la BD
-        this.mDatabase.insert(CrimeDbSchema.CrimeTable.NAME,null,getContentValues(c));
+        if(crime != null && user == null){
+            this.mDatabase.insert(CrimeDbSchema.CrimeTable.NAME,null,getContentValues(crime,null));
+        }
+        else if(user != null && crime == null){
+            this.mDatabase.insert(CrimeDbSchema.UserTable.NAME,null,getContentValues(null,user));
+        }
 
     }
 
-    //Metodo para actualizar un crimen
-    public void updateCrime(Crime crime){
+    //Metodo para actualizar un crimen o user
+    public void updateObject(Crime crime, User user){
 
-        //Obtengo el ID
-        String uuidString = crime.getId().toString();
+        //Declaro un content values y un string nulo
+        ContentValues values = null;
+        String uuidString = null;
 
-        //Obtengo los valores del crime
-        ContentValues values = getContentValues(crime);
+        //En funcion de los datos proporcionados obtenemos unos datos u otros
+        if(crime != null && user == null){
+            getContentValues(crime,null);
+            crime.getId().toString();
+        }else if(crime == null && user != null){
+            getContentValues(null,user);
+            user.getIdUser().toString();
+        }
 
         //Actualizo los datos
-        this.mDatabase.update(CrimeDbSchema.CrimeTable.NAME,              //Nombre tabla
-                values,
-                CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",  //Condicion
-                new String[]{uuidString});
+        this.mDatabase.update((crime != null && user == null) ? CrimeDbSchema.CrimeTable.NAME :
+                              (crime == null && user != null) ? CrimeDbSchema.CrimeTable.NAME :
+                                                                CrimeDbSchema.UserTable.NAME ,
+                              values,
+                              (crime != null && user == null) ? CrimeDbSchema.CrimeTable.Cols.UUID + " = ?":
+                              (crime == null && user != null) ? CrimeDbSchema.CrimeTable.Cols.UUID + " = ?":
+                                                                CrimeDbSchema.UserTable.Cols.UUID + " = ?",
+                              new String[]{uuidString});
+
 
     }
 
-    //Metodo para borrar un crime
-    public void deleteCrime(Crime crime){
+    //Metodo para borrar un crime o user
+    public void deleteObject(Crime crime, User user){
 
-        //Obtengo el ID
-        String uuidString = crime.getId().toString();
+        //Declaro un string nulo
+        String uuidString = null;
 
-        //Llamo a un metodo de la DB y borro el crime
-        this.mDatabase.delete(CrimeDbSchema.CrimeTable.NAME,
-                CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",
-                new String[]{uuidString});
+        //En funcion de los datos hacemos una cosa u otra
+        if(crime != null && user == null) {
+
+            //Obtengo el id del crime
+            uuidString = crime.getId().toString();
+
+            //Llamo a un metodo de la DB y borro el crime
+            this.mDatabase.delete(CrimeDbSchema.CrimeTable.NAME,
+                    CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",
+                    new String[]{uuidString});
+        } else if(crime == null && user != null){
+
+            //Obtengo el id del user
+            uuidString = user.getIdUser().toString();
+
+            //Llamo a un metodo de la DB y borro el user
+            this.mDatabase.delete(CrimeDbSchema.UserTable.NAME,
+                    CrimeDbSchema.UserTable.Cols.UUID + " = ?",
+                    new String[]{uuidString});
+
+        }
 
     }
 
     //Metodo crear un cursor y recorer la tabla
-    private CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs){
+    private CrimeCursorWrapper queryCrimes(String nameTable,String whereClause, String[] whereArgs){
 
         //Declaro un cursor y lo asocio a una tabla
         Cursor cursor = mDatabase.query(
-                CrimeDbSchema.CrimeTable.NAME,
+                nameTable.equals("crimes") ? CrimeDbSchema.CrimeTable.NAME :
+                nameTable.equals("users")  ? CrimeDbSchema.UserTable.NAME :
+                                             CrimeDbSchema.UserTable.NAME,
                 null,
                 whereClause,
                 whereArgs,
                 null,
                 null,
                 null
+
         );
 
         //Devuelvo el CrimeCursor con un cursor asociado a la tabla

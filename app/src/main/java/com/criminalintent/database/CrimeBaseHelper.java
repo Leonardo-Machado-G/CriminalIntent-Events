@@ -19,28 +19,26 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        //Sentencia de la DB para crear una tabla
+        //Sentencia de la DB para crear una tabla de crimes
         db.execSQL("create table " + CrimeDbSchema.CrimeTable.NAME + "(" +
             "_id integer primary key autoincrement, " +
             CrimeDbSchema.CrimeTable.Cols.UUID + ", "+
             CrimeDbSchema.CrimeTable.Cols.TITLE + ", "+
             CrimeDbSchema.CrimeTable.Cols.DATE + ", "+
             CrimeDbSchema.CrimeTable.Cols.SOLVED + ","+
-            //añadimos la nueva columna en la tabla
-            CrimeDbSchema.CrimeTable.Cols.SUSPECT +
-        ")"
+            CrimeDbSchema.CrimeTable.Cols.SUSPECT + ")"
 
         );
 
-        //Sentencia de la DB para crear una tabla
-        db.execSQL("create table " + CrimeDbSchema.CrimeTable.NAME + "(" +
+        //Sentencia de la DB para crear una tabla de users
+        db.execSQL("create table " + CrimeDbSchema.UserTable.NAME + "(" +
                 "_id integer primary key autoincrement, " +
-                CrimeDbSchema.CrimeTable.Cols.UUID + ", "+
-                CrimeDbSchema.CrimeTable.Cols.TITLE + ", "+
-                CrimeDbSchema.CrimeTable.Cols.DATE + ", "+
-                CrimeDbSchema.CrimeTable.Cols.SOLVED + ","+
-                CrimeDbSchema.CrimeTable.Cols.SUSPECT +
-                ")"
+                CrimeDbSchema.UserTable.Cols.UUID + ", " +
+                CrimeDbSchema.UserTable.Cols.TYPEUSER + ", " +
+                CrimeDbSchema.UserTable.Cols.NAME + ", " +
+                CrimeDbSchema.UserTable.Cols.EMAIL + ", " +
+                CrimeDbSchema.UserTable.Cols.PASSWORD + ", " +
+                CrimeDbSchema.UserTable.Cols.PHOTO + ")"
 
         );
 
