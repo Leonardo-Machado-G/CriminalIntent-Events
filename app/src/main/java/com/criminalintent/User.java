@@ -4,13 +4,6 @@ package com.criminalintent;
 //Importamos las librerias necesarias
 import java.util.UUID;
 
-//Declaramos un enum para definir el tipo del cliente
-enum TypeUser{
-
-    TYPE_CLIENT,TYPE_ADMIN,TYPE_ORG,TYPE_ORG_ADMIN
-
-}
-
 //Declaramos la clase
 public class User {
 

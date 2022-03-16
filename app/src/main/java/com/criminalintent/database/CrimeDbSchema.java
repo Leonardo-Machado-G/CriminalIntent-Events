@@ -22,4 +22,24 @@ public class CrimeDbSchema {
 
     }
 
+    //Clase interna que define la estructura de nuestra tabla de usuarios
+    public static final class UserTable{
+
+        //Especificamos el nombre de la table dentro de la BD
+        public static final String NAME = "users";
+
+        //Describimos las columnas que forman parte de la tabla
+        public static final class Cols{
+
+            public static final String UUID = "uuidUser";
+            public static final String NAME = "nameUser";
+            public static final String EMAIL = "emailUser";
+            public static final String PASSWORD = "passwordUser";
+            public static final String PHOTO = "photoUser";
+            public static final String TYPEUSER = "typeUser";
+
+        }
+
+    }
+
 }
