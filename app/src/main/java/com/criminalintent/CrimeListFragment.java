@@ -17,9 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.Date;
+
+import java.util.ArrayList;
 import java.util.List;
 public class CrimeListFragment extends Fragment {
 
@@ -143,10 +143,15 @@ public class CrimeListFragment extends Fragment {
         this.mCrimeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
 
         //Obtengo un crimelab
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        ObjectLab objectLab = ObjectLab.get(getActivity());
 
-        //Mediante el crimelab relleno la lista
-        List<Crime> crimes = crimeLab.getCrimes();
+        //Instancio una lista de crime
+        List<Crime> crimes = new ArrayList<>();
+
+        //Añadimos los crimes a la lista
+        for(int i = 0; i < objectLab.getList("crimes").size() ; i++){
+            crimes.add((Crime) objectLab.getList("crimes").get(i));
+        }
 
         //Inserto en el adapter los crimes
         this.mAdapter = new CrimeAdapter(crimes);
@@ -167,7 +172,7 @@ public class CrimeListFragment extends Fragment {
 
                 //Definimos un nuevo crime, lo añadimos a la lista e iniciamos un intent
                 Crime crime = new Crime();
-                CrimeLab.get(getActivity()).addCrime(crime);
+                ObjectLab.get(getActivity()).addObject(crime, null);
                 Intent intent = CrimePagerActivity.newIntent(getActivity(),crime.getId());
                 startActivity(intent);
 
@@ -190,10 +195,15 @@ public class CrimeListFragment extends Fragment {
     public void updateUI(){
 
         //Instancio un crimelab
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        ObjectLab objectLab = ObjectLab.get(getActivity());
 
-        //Instancio una lista de crimes y obtengo los del crimelab
-        List<Crime> crimes = crimeLab.getCrimes();
+        //Instancio una lista de crime
+        List<Crime> crimes = new ArrayList<>();
+
+        //Añadimos los crimes a la lista
+        for(int i = 0; i < objectLab.getList("crimes").size() ; i++){
+            crimes.add((Crime) objectLab.getList("crimes").get(i));
+        }
 
         //Si hay elementos en la lista hacemos invisible el textview
         if(crimes.size() == 0){
@@ -267,7 +277,7 @@ public class CrimeListFragment extends Fragment {
                 Crime crime = new Crime();
 
                 //Añadimos el crime
-                CrimeLab.get(getActivity()).addCrime(crime);
+                ObjectLab.get(getActivity()).addObject(crime, null);
 
                 //Actualizamos la UI
                 updateUI();
@@ -301,7 +311,7 @@ public class CrimeListFragment extends Fragment {
     private void updateSubtitle(){
 
         //Obtenemos el tamaño de lai
-        int crimeCount = CrimeLab.get(getActivity()).getCrimes().size();
+        int crimeCount = ObjectLab.get(getActivity()).getList("crimes").size();
 
         ((AppCompatActivity) getActivity()) //Obtenemos la activity
                 .getSupportActionBar()      //Obtenemos el menu

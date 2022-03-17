@@ -10,10 +10,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-public class CrimeLab {
+public class ObjectLab {
 
     //Declaro un crimelab estatico
-    private static CrimeLab sCrimeLab;
+    private static ObjectLab sObjectLab;
 
     //Declaro un contexto
     private Context mContext;
@@ -22,7 +22,7 @@ public class CrimeLab {
     private SQLiteDatabase mDatabase;
 
     //Defino un constructor
-    private CrimeLab(Context context){
+    private ObjectLab(Context context){
 
         //Código para abrir la base de datos.
         this.mContext = context.getApplicationContext();
@@ -40,12 +40,7 @@ public class CrimeLab {
     public List<Object>getList(String nameTable){
 
         //Instanciamos una lista vacia
-        List<Object> elements = null;
-        if(nameTable.equals("crimes")){
-            elements = new ArrayList<>();
-        } else if(nameTable.equals("users")){
-            elements = new ArrayList<>();
-        }
+        List<Object> elements = new ArrayList<>();
 
         //Instanciamos un cursor para desplazarnos por la tabla
         CrimeCursorWrapper cursor = queryCrimes(nameTable,null,null);
@@ -60,8 +55,8 @@ public class CrimeLab {
 
                 //Añado un crime y me desplazo al siguiente
                 elements.add(nameTable.equals("crimes") ? cursor.getCrime() :
-                        nameTable.equals("users")  ? cursor.getUser()  :
-                                                    cursor.getCrime());
+                             nameTable.equals("users")  ? cursor.getUser()  :
+                                                          cursor.getCrime());
                 cursor.moveToNext();
 
             }
@@ -100,8 +95,8 @@ public class CrimeLab {
     }
 
     //Metodo para obtener un crimelab
-    public static CrimeLab get(Context context){
-        return sCrimeLab = sCrimeLab == null ? new CrimeLab(context) : sCrimeLab;
+    public static ObjectLab get(Context context){
+        return sObjectLab = sObjectLab == null ? new ObjectLab(context) : sObjectLab;
     }
 
     //Metodo que se encarga de pasar un Crime o User a una instancia de ContentValues
@@ -162,23 +157,34 @@ public class CrimeLab {
 
         //En funcion de los datos proporcionados obtenemos unos datos u otros
         if(crime != null && user == null){
-            getContentValues(crime,null);
-            crime.getId().toString();
+
+            //Obtengo los valores del crime
+            values = getContentValues(crime,null);
+
+            //Obtengo el ID
+            uuidString = crime.getId().toString();
+
+            //Actualizo los datos
+            this.mDatabase.update(CrimeDbSchema.CrimeTable.NAME,
+                                  values,
+                            CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",
+                                  new String[]{uuidString});
+
         }else if(crime == null && user != null){
-            getContentValues(null,user);
-            user.getIdUser().toString();
+
+            //Obtengo los valores del crime
+            values = getContentValues(null,user);
+
+            //Obtengo el ID
+            uuidString = user.getIdUser().toString();
+
+            //Actualizo los datos
+            this.mDatabase.update(CrimeDbSchema.UserTable.Cols.UUID + " = ?",
+                    values,
+                    CrimeDbSchema.UserTable.Cols.UUID + " = ?",
+                    new String[]{uuidString});
+
         }
-
-        //Actualizo los datos
-        this.mDatabase.update((crime != null && user == null) ? CrimeDbSchema.CrimeTable.NAME :
-                              (crime == null && user != null) ? CrimeDbSchema.CrimeTable.NAME :
-                                                                CrimeDbSchema.UserTable.NAME ,
-                              values,
-                              (crime != null && user == null) ? CrimeDbSchema.CrimeTable.Cols.UUID + " = ?":
-                              (crime == null && user != null) ? CrimeDbSchema.CrimeTable.Cols.UUID + " = ?":
-                                                                CrimeDbSchema.UserTable.Cols.UUID + " = ?",
-                              new String[]{uuidString});
-
 
     }
 
@@ -198,6 +204,7 @@ public class CrimeLab {
             this.mDatabase.delete(CrimeDbSchema.CrimeTable.NAME,
                     CrimeDbSchema.CrimeTable.Cols.UUID + " = ?",
                     new String[]{uuidString});
+
         } else if(crime == null && user != null){
 
             //Obtengo el id del user

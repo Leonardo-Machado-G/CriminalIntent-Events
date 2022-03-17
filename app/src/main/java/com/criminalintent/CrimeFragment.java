@@ -103,10 +103,12 @@ public class CrimeFragment extends Fragment {
 
         //Instancio un ID obteniendo el ID del intent
         UUID crimeId = (UUID)getArguments().getSerializable(ARG_CRIME_ID);
-        this.mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+
+        //Obtengo un crime de crimelab
+        this.mCrime = (Crime) ObjectLab.get(getActivity()).getObject(crimeId,"crimes");
 
         //Instanciamos la variable para la ruta de la foto
-        this.mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
+        this.mPhotoFile = ObjectLab.get(getActivity()).getPhotoFile(mCrime);
 
     }
 
@@ -128,7 +130,6 @@ public class CrimeFragment extends Fragment {
         this.mSuspectButton = (Button) view.findViewById(R.id.crime_suspect);
         this.mTimeButton = (Button) view.findViewById(R.id.crime_time);
         this.mSuspectField = (EditText) view.findViewById(R.id.edit_text_suspect);
-
 
         //Obtengo la informacion del crime
         this.mTitleField.setText(this.mCrime.getTitle());
@@ -403,7 +404,8 @@ public class CrimeFragment extends Fragment {
         super.onPause();
 
         //Actualizamos el crime
-        CrimeLab.get(getActivity()).updateCrime(mCrime);
+        ObjectLab.get(getActivity()).updateObject(this.mCrime, null);
+
 
     }
 
@@ -419,7 +421,7 @@ public class CrimeFragment extends Fragment {
         String dateString = DateFormat.format( "EEE MMM dd",mCrime.getDate()).toString();
 
         //Obtengo el sospechoso
-        String suspect = mCrime.getSuspect();
+        String suspect = this.mCrime.getSuspect();
 
         //Si es nulo obtengo uno u otro string
         suspect = suspect == null ?
@@ -454,10 +456,16 @@ public class CrimeFragment extends Fragment {
 
     //Metodo para actualizar el crime
     private void updateCrime(){
-        CrimeLab.get(getActivity()).updateCrime(this.mCrime);
+
+        //Actualizo el crime
+        ObjectLab.get(getActivity()).updateObject(this.mCrime,null);
 
         //Envio el crime mediante la interfaz
         this.mCallbacks.onCrimeUpdated(this.mCrime);
+
+        //Cambio el texto del edittext
+        this.mSuspectField.setText(mCrime.getSuspect());
+
     }
 
 }

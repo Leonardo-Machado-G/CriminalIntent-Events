@@ -11,9 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.Callbacks{
@@ -37,6 +38,9 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
 
         //Asocio a la view un layout
         setContentView(R.layout.activity_crime_pager);
+
+        //
+        this.mCrimes = new ArrayList<>();
 
         //Definimos un UUID obtengo del intent
         this.crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
@@ -63,14 +67,20 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
             public void onClick(View view) {
 
                 //Utilizamos el button final para cambiar la pagina actual
-                CrimePagerActivity.this.mViewPager.setCurrentItem(CrimeLab.get(CrimePagerActivity.this).getCrimes().size() -1);
+                CrimePagerActivity.this.mViewPager
+                        .setCurrentItem(ObjectLab.get(CrimePagerActivity.this)
+                                                .getList("crimes")
+                                                .size() -1);
 
             }
 
         });
 
         //Traemos la lista de elemento Crime contenida en CrimeLab
-        this.mCrimes = CrimeLab.get(this).getCrimes();
+        //Recorremos la lista y transformamos los object a crime
+        for(int i = 0; i < ObjectLab.get(this).getList("crimes").size(); i++){
+            this.mCrimes.add((Crime) ObjectLab.get(this).getList("crimes").get(i));
+        }
 
         //Creamos el objeto mViewPager que mostrara los crimenes
         this.mViewPager = (ViewPager2) findViewById(R.id.activity_crime_pager_view_pager);
@@ -107,10 +117,16 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
 
+                //Instancio una lista de crime
+                List<Crime> crimes = new ArrayList<>();
+
+                //Recorro la lista y añado los object
+                for(int i = 0; i < ObjectLab.get(CrimePagerActivity.this).getList("crimes").size(); i++){
+                    crimes.add((Crime) ObjectLab.get(CrimePagerActivity.this).getList("crimes").get(i));
+                }
+
                 //Cambio el ID actual
-                CrimePagerActivity.this.crimeId = CrimeLab
-                        .get(CrimePagerActivity.this)
-                        .getCrimes()
+                CrimePagerActivity.this.crimeId = crimes
                         .get(CrimePagerActivity.this.mViewPager.getCurrentItem())
                         .getId();
 
@@ -123,7 +139,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
                     buttonStart.setEnabled(false);
                     buttonFinal.setEnabled(true);
 
-                } else if (indexContact == CrimeLab.get(CrimePagerActivity.this).getCrimes().size() -1){
+                } else if (indexContact == ObjectLab.get(CrimePagerActivity.this).getList("crimes").size() -1){
 
                     buttonStart.setEnabled(true);
                     buttonFinal.setEnabled(false);
@@ -178,7 +194,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
             case R.id.delete_crime:
 
                 //Borro el crimen seleccionado
-                CrimeLab.get(this).deleteCrime(CrimeLab.get(this).getCrime(this.crimeId));
+                ObjectLab.get(this).deleteObject((Crime) ObjectLab.get(this).getObject(this.crimeId,"crimes"), null);
 
                 //Retrocedemos en la activity
                 finish();
