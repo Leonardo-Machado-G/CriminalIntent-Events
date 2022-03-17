@@ -405,8 +405,6 @@ public class CrimeFragment extends Fragment {
 
         //Actualizamos el crime
         ObjectLab.get(getActivity()).updateObject(this.mCrime, null);
-
-
     }
 
     //Metodo que nos va a construir el informe de un crime en ejecucion
