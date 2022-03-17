@@ -100,7 +100,7 @@ public class ObjectLab {
     }
 
     //Metodo que se encarga de pasar un Crime o User a una instancia de ContentValues
-    private static ContentValues getContentValues(Crime crime, User user){
+    private static ContentValues getContentValues(CrimePOJO crime, UserPOJO user){
 
         //Instancio un object contentvalues
         ContentValues values = new ContentValues();
@@ -136,7 +136,7 @@ public class ObjectLab {
     }
 
     //Metodo para añadir un Crime o User
-    public void addObject(Crime crime, User user){
+    public void addObject(CrimePOJO crime, UserPOJO user){
 
         //Mediante ContentValues añadimos filas en la BD
         if(crime != null && user == null){
@@ -149,7 +149,7 @@ public class ObjectLab {
     }
 
     //Metodo para actualizar un crimen o user
-    public void updateObject(Crime crime, User user){
+    public void updateObject(CrimePOJO crime, UserPOJO user){
 
         //Declaro un content values y un string nulo
         ContentValues values = null;
@@ -189,7 +189,7 @@ public class ObjectLab {
     }
 
     //Metodo para borrar un crime o user
-    public void deleteObject(Crime crime, User user){
+    public void deleteObject(CrimePOJO crime, UserPOJO user){
 
         //Declaro un string nulo
         String uuidString = null;
@@ -242,7 +242,7 @@ public class ObjectLab {
     }
 
     //Metodo para proporcionar una ruta de almacenamiento para la foto
-    public File getPhotoFile(Crime crime){
+    public File getPhotoFile(CrimePOJO crime){
         return new File(this.mContext.getFilesDir(),crime.getPhotoFilename());
     }
 

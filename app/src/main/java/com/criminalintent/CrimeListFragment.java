@@ -25,7 +25,7 @@ public class CrimeListFragment extends Fragment {
 
     //Defino una interface para
     public interface Callbacks{
-        void onCrimeSelected(Crime crime);
+        void onCrimeSelected(CrimePOJO crime);
     }
 
     //Declaro los widget necesarios
@@ -68,7 +68,7 @@ public class CrimeListFragment extends Fragment {
         private TextView mTitleTextView;
         private TextView mDateTextView;
         private ImageView mSolvedImageView;
-        private Crime mCrime;
+        private CrimePOJO mCrime;
 
         //Defino un constructor donde serializamos sus componentes
         public CrimeHolder(LayoutInflater inflater, ViewGroup parent){
@@ -81,7 +81,7 @@ public class CrimeListFragment extends Fragment {
         }
 
         //Metodo que carga el contenido de un crime al ser llamado
-        public void bind(Crime crime){
+        public void bind(CrimePOJO crime){
             this.mCrime = crime;
             this.mTitleTextView.setText(mCrime.getTitle());
             this.mDateTextView.setText(DateFormat.format("E, MMMM dd, yyyy",mCrime.getDate()));
@@ -98,10 +98,10 @@ public class CrimeListFragment extends Fragment {
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
 
         //Declaro una lista de crimes privada
-        private List<Crime> mCrimes;
+        private List<CrimePOJO> mCrimes;
 
         //Defino un constructor
-        public CrimeAdapter(List<Crime> crimes){this.mCrimes = crimes;}
+        public CrimeAdapter(List<CrimePOJO> crimes){this.mCrimes = crimes;}
 
         //Metodo que define la view del holder
         @NonNull
@@ -124,7 +124,7 @@ public class CrimeListFragment extends Fragment {
         public int getItemCount() {return mCrimes.size();}
 
         //Metodo que reemplaza la lista de crimenes que se muestran
-        public void setCrimes (List<Crime> crimes){this.mCrimes = crimes;}
+        public void setCrimes (List<CrimePOJO> crimes){this.mCrimes = crimes;}
 
     }
 
@@ -146,11 +146,11 @@ public class CrimeListFragment extends Fragment {
         ObjectLab objectLab = ObjectLab.get(getActivity());
 
         //Instancio una lista de crime
-        List<Crime> crimes = new ArrayList<>();
+        List<CrimePOJO> crimes = new ArrayList<>();
 
         //Añadimos los crimes a la lista
         for(int i = 0; i < objectLab.getList("crimes").size() ; i++){
-            crimes.add((Crime) objectLab.getList("crimes").get(i));
+            crimes.add((CrimePOJO) objectLab.getList("crimes").get(i));
         }
 
         //Inserto en el adapter los crimes
@@ -171,7 +171,7 @@ public class CrimeListFragment extends Fragment {
             public void onClick(View v) {
 
                 //Definimos un nuevo crime, lo añadimos a la lista e iniciamos un intent
-                Crime crime = new Crime();
+                CrimePOJO crime = new CrimePOJO();
                 ObjectLab.get(getActivity()).addObject(crime, null);
                 Intent intent = CrimePagerActivity.newIntent(getActivity(),crime.getId());
                 startActivity(intent);
@@ -198,11 +198,11 @@ public class CrimeListFragment extends Fragment {
         ObjectLab objectLab = ObjectLab.get(getActivity());
 
         //Instancio una lista de crime
-        List<Crime> crimes = new ArrayList<>();
+        List<CrimePOJO> crimes = new ArrayList<>();
 
         //Añadimos los crimes a la lista
         for(int i = 0; i < objectLab.getList("crimes").size() ; i++){
-            crimes.add((Crime) objectLab.getList("crimes").get(i));
+            crimes.add((CrimePOJO) objectLab.getList("crimes").get(i));
         }
 
         //Si hay elementos en la lista hacemos invisible el textview
@@ -274,7 +274,7 @@ public class CrimeListFragment extends Fragment {
             case R.id.new_crime:
 
                 //Instanciamos un crime
-                Crime crime = new Crime();
+                CrimePOJO crime = new CrimePOJO();
 
                 //Añadimos el crime
                 ObjectLab.get(getActivity()).addObject(crime, null);

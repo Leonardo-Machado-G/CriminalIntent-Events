@@ -5,7 +5,7 @@ package com.criminalintent;
 import java.util.UUID;
 
 //Declaramos la clase
-public class User {
+public class UserPOJO {
 
     //Definimos los atributos de la clase
     private UUID idUser;
@@ -16,11 +16,11 @@ public class User {
     private TypeUser typeUser;
 
     //Defino el constructor de la clase
-    public User(TypeUser typeUser,
-                  String nameUser,
-                  String emailUser,
-                  String passwordUser,
-                  long photoUser){
+    public UserPOJO(TypeUser typeUser,
+                    String nameUser,
+                    String emailUser,
+                    String passwordUser,
+                    long photoUser){
 
         //Si el tipo de usuario es nulo, establecemos por defecto type_client
         this.typeUser = (typeUser == null) ? TypeUser.TYPE_CLIENT : typeUser;
@@ -47,5 +47,15 @@ public class User {
     public void setPasswordUser(String passwordUser) {this.passwordUser = passwordUser;}
     public void setPhotoUser(long photoUser) {this.photoUser = photoUser;}
     public void setTypeUser(TypeUser typeUser) {this.typeUser = typeUser;}
+
+    @Override
+    public String toString(){
+        return "UUID: " + this.getIdUser() +
+               "\nTypeUser: " + getTypeUser().name() +
+               "\nName: " + this.getNameUser() +
+               "\nEmail: " + this.getEmailUser() +
+               "\nPassword: " + this.getPasswordUser() +
+               "\nPhoto: " + this.getPhotoUser();
+    }
 
 }

@@ -3,6 +3,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.criminalintent.R;
+import com.criminalintent.TypeUser;
+
+import java.util.UUID;
+
 //Clase que nos facilita la apertura y tratamiento de la base de datos
 public class CrimeBaseHelper extends SQLiteOpenHelper {
 
@@ -41,6 +46,22 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
                 CrimeDbSchema.UserTable.Cols.PHOTO + ")"
 
         );
+
+        //Inserto un administrador para crear los primeros contactos
+        db.execSQL("insert into " + CrimeDbSchema.UserTable.NAME + "(" +
+                        CrimeDbSchema.UserTable.Cols.UUID + ", " +
+                        CrimeDbSchema.UserTable.Cols.TYPEUSER + ", " +
+                        CrimeDbSchema.UserTable.Cols.NAME + ", " +
+                        CrimeDbSchema.UserTable.Cols.EMAIL + ", " +
+                        CrimeDbSchema.UserTable.Cols.PASSWORD + ", " +
+                        CrimeDbSchema.UserTable.Cols.PHOTO + ")" +
+
+                    "values('" + UUID.randomUUID().toString() + "','" +
+                                 TypeUser.TYPE_ADMIN.name() + "','" +
+                                 "admin" + "','" +
+                                 "admin" + "','" +
+                                 "root" + "','" +
+                                 R.drawable.eventolandia + "')");
 
     }
 

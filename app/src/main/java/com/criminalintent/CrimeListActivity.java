@@ -1,5 +1,4 @@
 package com.criminalintent;
-import android.content.Intent;
 import androidx.fragment.app.Fragment;
 public class CrimeListActivity extends SingleFragmentActivity
         implements CrimeListFragment.Callbacks, CrimeFragment.Callbacks{
@@ -14,7 +13,7 @@ public class CrimeListActivity extends SingleFragmentActivity
 
     //Metodo para reemplazar un fragment o insertar uno nuevo
     @Override
-    public void onCrimeSelected(Crime crime) {
+    public void onCrimeSelected(CrimePOJO crime) {
 
         //Comprobamos si existe un detail_fragment_container
         if(findViewById(R.id.detail_fragment_container) == null){
@@ -39,7 +38,7 @@ public class CrimeListActivity extends SingleFragmentActivity
 
     //Metodo para actualizar un listfragment con otro crime
     @Override
-    public void onCrimeUpdated(Crime crime) {
+    public void onCrimeUpdated(CrimePOJO crime) {
 
         //Instanciamos un listfragment y le asociamos mediante un manager un ID
         CrimeListFragment listFragment = (CrimeListFragment)getSupportFragmentManager()

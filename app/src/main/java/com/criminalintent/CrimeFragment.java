@@ -34,7 +34,7 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
 
     //Declaro los widgets necesarios
-    private Crime mCrime;
+    private CrimePOJO mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
@@ -53,7 +53,7 @@ public class CrimeFragment extends Fragment {
 
     /*Interface requerida para las activity que quieran albergar un fragment.*/
     public interface Callbacks{
-        void onCrimeUpdated(Crime crime);
+        void onCrimeUpdated(CrimePOJO crime);
     }
 
     //Instancio constantes para el intercambio de datos
@@ -105,7 +105,7 @@ public class CrimeFragment extends Fragment {
         UUID crimeId = (UUID)getArguments().getSerializable(ARG_CRIME_ID);
 
         //Obtengo un crime de crimelab
-        this.mCrime = (Crime) ObjectLab.get(getActivity()).getObject(crimeId,"crimes");
+        this.mCrime = (CrimePOJO) ObjectLab.get(getActivity()).getObject(crimeId,"crimes");
 
         //Instanciamos la variable para la ruta de la foto
         this.mPhotoFile = ObjectLab.get(getActivity()).getPhotoFile(mCrime);

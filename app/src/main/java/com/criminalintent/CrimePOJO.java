@@ -3,7 +3,7 @@ import java.util.Date;
 import java.util.UUID;
 
 //Declaro la clase
-public class Crime {
+public class CrimePOJO {
 
     //Defino los atributos de la clase
     private UUID mId;
@@ -13,8 +13,8 @@ public class Crime {
     private String mSuspect;
 
     //Constructor sobrecargado para el cursor
-    public Crime(){ this (UUID.randomUUID()); }
-    public Crime(UUID id){
+    public CrimePOJO(){ this (UUID.randomUUID()); }
+    public CrimePOJO(UUID id){
         this.mId = id;
         this.mDate = new Date();
     }

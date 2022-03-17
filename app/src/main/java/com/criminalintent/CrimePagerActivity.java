@@ -22,7 +22,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
     //Declaro una lista, viewpager y una variable para obtener el id del crime
     private static final String EXTRA_CRIME_ID = "crime_id";
     private ViewPager2 mViewPager;
-    private List<Crime> mCrimes;
+    private List<CrimePOJO> mCrimes;
 
     //Declaro dos buttons para el desplazamiento de la viewpager
     private Button buttonStart;
@@ -79,7 +79,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
         //Traemos la lista de elemento Crime contenida en CrimeLab
         //Recorremos la lista y transformamos los object a crime
         for(int i = 0; i < ObjectLab.get(this).getList("crimes").size(); i++){
-            this.mCrimes.add((Crime) ObjectLab.get(this).getList("crimes").get(i));
+            this.mCrimes.add((CrimePOJO) ObjectLab.get(this).getList("crimes").get(i));
         }
 
         //Creamos el objeto mViewPager que mostrara los crimenes
@@ -118,11 +118,11 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
                 super.onPageScrollStateChanged(state);
 
                 //Instancio una lista de crime
-                List<Crime> crimes = new ArrayList<>();
+                List<CrimePOJO> crimes = new ArrayList<>();
 
                 //Recorro la lista y añado los object
                 for(int i = 0; i < ObjectLab.get(CrimePagerActivity.this).getList("crimes").size(); i++){
-                    crimes.add((Crime) ObjectLab.get(CrimePagerActivity.this).getList("crimes").get(i));
+                    crimes.add((CrimePOJO) ObjectLab.get(CrimePagerActivity.this).getList("crimes").get(i));
                 }
 
                 //Cambio el ID actual
@@ -194,7 +194,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
             case R.id.delete_crime:
 
                 //Borro el crimen seleccionado
-                ObjectLab.get(this).deleteObject((Crime) ObjectLab.get(this).getObject(this.crimeId,"crimes"), null);
+                ObjectLab.get(this).deleteObject((CrimePOJO) ObjectLab.get(this).getObject(this.crimeId,"crimes"), null);
 
                 //Retrocedemos en la activity
                 finish();
@@ -209,7 +209,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
 
     //Metodo para actualizar el fragment heredado
     @Override
-    public void onCrimeUpdated(Crime crime) {
+    public void onCrimeUpdated(CrimePOJO crime) {
 
     }
 
