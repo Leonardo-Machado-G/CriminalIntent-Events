@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +21,8 @@ import java.util.List;
 import java.util.UUID;
 
 //Declaramos la clase y heredamos
-public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        CrimeListFragment.Callbacks, CrimeFragment.Callbacks {
 
     //Declaramos un ID del usuario
     private UserPOJO m_User;
@@ -71,6 +73,28 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
+        //Hacemos invisible los menus en funcion del tipo de usuario
+        if(this.m_User.getTypeUser() == TypeUser.TYPE_ADMIN){
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_settings).setVisible(true);
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_users).setVisible(true);
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_crimes).setVisible(false);
+        }
+        else if(this.m_User.getTypeUser() == TypeUser.TYPE_ORG){
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_settings).setVisible(true);
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_users).setVisible(false);
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_crimes).setVisible(true);
+        }
+        else if(this.m_User.getTypeUser() == TypeUser.TYPE_CLIENT){
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_settings).setVisible(true);
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_users).setVisible(false);
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_crimes).setVisible(true);
+        }
+        else if(this.m_User.getTypeUser() == TypeUser.TYPE_ORG_ADMIN){
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_settings).setVisible(true);
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_users).setVisible(true);
+            this.m_NavigationView.getMenu().findItem(R.id.drawer_crimes).setVisible(true);
+        }
+
         Log.d("",this.m_User.toString());
 
     }
@@ -84,7 +108,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.drawer_home:
 
-
                 break;
 
             case R.id.drawer_settings:
@@ -94,11 +117,22 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.drawer_crimes:
 
+                //
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.activity_main_frame_layout,
+                                 CrimeListFragment.newInstance(this.m_User.getIdUser()))
+                        .commit();
 
                 break;
 
             case R.id.drawer_users:
-
+                //
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.activity_main_frame_layout,
+                                CrimeListFragment.newInstance(this.m_User.getIdUser()))
+                        .commit();
 
                 break;
 
@@ -152,6 +186,45 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         //Configuramos el listener para cuando se seleccione el elemento
         this.m_NavigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    //Metodo para reemplazar un fragment o insertar uno nuevo
+    @Override
+    public void onCrimeSelected(CrimePOJO crime) {
+
+        //Comprobamos si existe un detail_fragment_container
+        if(findViewById(R.id.detail_fragment_container) == null){
+
+            //Instanciamos un CrimePagerActivity con un ID
+            startActivity(CrimePagerActivity.newIntent(this, crime.getId()));
+
+        }else{
+
+            //Instaciamos un crimefragment con un ID
+            Fragment newDetail = CrimeFragment.newInstance(crime.getId());
+
+            //Reemplazamos el anterior por un nuevo fragment
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.detail_fragment_container, newDetail)
+                    .commit();
+
+        }
+
+
+    }
+
+    //Metodo para actualizar un listfragment con otro crime
+    @Override
+    public void onCrimeUpdated(CrimePOJO crime) {
+
+        //Instanciamos un listfragment y le asociamos mediante un manager un ID
+        CrimeListFragment listFragment = (CrimeListFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_container);
+
+        //Actualizamos su UI
+        listFragment.updateUI();
 
     }
 

@@ -60,5 +60,6 @@
     <string name="user_list_fragment_tab">User list</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="alert_exist_user">User doesn\'t exist</string>
 
 </resources>

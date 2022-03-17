@@ -21,7 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 public class CrimeListFragment extends Fragment {
+
+    //Declaro una variable para intercambiar informacion
+    private static final String ARG_CRIMELIST_ID = "crimelist_id";
 
     //Defino una interface para
     public interface Callbacks{
@@ -38,11 +43,20 @@ public class CrimeListFragment extends Fragment {
     //Declaro una variable interface para la comunicacion con el fragment
     private Callbacks mCallbacks;
 
+    //Metodo para instanciar un fragment con un ID
+    public static CrimeListFragment newInstance(UUID userId){
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CRIMELIST_ID,userId);
+        CrimeListFragment fragment = new CrimeListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     //Metodo para obtener el contexto una vez se asocia el fragment
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.mCallbacks = (Callbacks) context;
+        this.mCallbacks = (Callbacks) getContext();
     }
 
     //Metodo para retirar la interface antes de ser eliminado el fragment
@@ -59,6 +73,7 @@ public class CrimeListFragment extends Fragment {
 
         //Indico que tenemos un menu en este fragment
         setHasOptionsMenu(true);
+
     }
 
     //Declaro una clase interna privada
@@ -83,14 +98,14 @@ public class CrimeListFragment extends Fragment {
         //Metodo que carga el contenido de un crime al ser llamado
         public void bind(CrimePOJO crime){
             this.mCrime = crime;
-            this.mTitleTextView.setText(mCrime.getTitle());
-            this.mDateTextView.setText(DateFormat.format("E, MMMM dd, yyyy",mCrime.getDate()));
+            this.mTitleTextView.setText(this.mCrime.getTitle());
+            this.mDateTextView.setText(DateFormat.format("E, MMMM dd, yyyy",this.mCrime.getDate()));
             this.mSolvedImageView.setVisibility(crime.isSolved()?View.VISIBLE:View.GONE);
         }
 
         //Metodo que se ejecuta al hacer click en la view enviando un crime
         @Override
-        public void onClick(View v) { mCallbacks.onCrimeSelected(mCrime); }
+        public void onClick(View v) {mCallbacks.onCrimeSelected(this.mCrime);}
 
     }
 

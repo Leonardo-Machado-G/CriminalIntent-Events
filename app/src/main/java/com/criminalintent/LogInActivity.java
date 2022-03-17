@@ -79,7 +79,8 @@ public class LogInActivity extends AppCompatActivity {
                 }
 
                 //Si no existe el usuario mostramos el mensaje
-                if(!validation){Toast.makeText(LogInActivity.this, "User doesn't exist", Toast.LENGTH_SHORT).show();}
+                if(!validation){Toast.makeText(LogInActivity.this,getString(R.string.alert_exist_user),
+                        Toast.LENGTH_SHORT).show();}
 
             }
 
