@@ -126,7 +126,7 @@ public class ObjectLab {
 
             values.put(CrimeDbSchema.UserTable.Cols.NAME, user.getNameUser());
             values.put(CrimeDbSchema.UserTable.Cols.EMAIL, user.getEmailUser());
-            values.put(CrimeDbSchema.UserTable.Cols.PASSWORD, user.getEmailUser());
+            values.put(CrimeDbSchema.UserTable.Cols.PASSWORD, user.getPasswordUser());
             values.put(CrimeDbSchema.UserTable.Cols.PHOTO, user.getPhotoUser());
 
         }
@@ -179,7 +179,7 @@ public class ObjectLab {
             uuidString = user.getIdUser().toString();
 
             //Actualizo los datos
-            this.mDatabase.update(CrimeDbSchema.UserTable.Cols.UUID + " = ?",
+            this.mDatabase.update(CrimeDbSchema.UserTable.NAME,
                     values,
                     CrimeDbSchema.UserTable.Cols.UUID + " = ?",
                     new String[]{uuidString});

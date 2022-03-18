@@ -102,9 +102,11 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         this.m_NavigationView.setCheckedItem(R.id.drawer_home);
         selectFirstFragment();
 
+        Log.d("",""+this.m_User.toString());
+
     }
 
-    //
+    //Metodo que reacciona segun el item pulsado
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -113,13 +115,19 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.drawer_home:
 
-                //Cambio el fragment actual por el de crimelist
+                //Cambio el fragment actual por welcome
                 selectFirstFragment();
 
                 break;
 
             case R.id.drawer_settings:
 
+                //Cambio el fragment actual por el de configuration
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.activity_main_frame_layout,
+                                ConfigurationFragment.newInstance(this.m_User.getIdUser()))
+                        .commit();
 
                 break;
 

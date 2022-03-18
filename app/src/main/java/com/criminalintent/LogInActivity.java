@@ -90,8 +90,8 @@ public class LogInActivity extends AppCompatActivity {
 
     //Al volver a la activity actualizamos la lista
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onRestart() {
+        super.onRestart();
         updateUsers();
     }
 

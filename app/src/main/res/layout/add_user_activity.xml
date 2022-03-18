@@ -188,9 +188,9 @@
 
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
+            android:layout_weight="1"
             android:fontFamily="serif"
-            android:gravity="center_horizontal"
+            android:gravity="right"
             android:padding="@dimen/padding_text_user"
             android:text="@string/photo_text_view"
             android:textColor="@color/black"
@@ -200,7 +200,7 @@
         <ImageButton
 
             android:id="@+id/image_button_select_photo"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher_round"
             android:layout_weight="1"
