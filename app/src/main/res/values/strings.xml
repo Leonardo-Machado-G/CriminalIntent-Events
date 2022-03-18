@@ -61,5 +61,14 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="alert_exist_user">User doesn\'t exist</string>
+    <string name="return_menu">Return</string>
+    <string name="welcome_text_view">Welcome to:</string>
+    <string name="administrator_text_view">Administrator</string>
+    <string name="client_text_view">Client</string>
+    <string name="organizer_text_view">Organizer</string>
+    <string name="home_fragment_button">Home</string>
+    <string name="configuration_fragment_button">Configuration</string>
+    <string name="crimes_fragment_button">Crimes</string>
+    <string name="users_fragment_button">Users</string>
 
 </resources>

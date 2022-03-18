@@ -6,6 +6,13 @@
 
     <item
 
+        android:title="@string/return_menu"
+        android:id="@+id/return_button"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_criminal_return"/>
+
+    <item
+
         android:id="@+id/delete_crime"
         android:icon="@drawable/ic_menu_delete_foreground"
         android:title="@string/delete_crime"

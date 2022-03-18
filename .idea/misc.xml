@@ -3,11 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/drawable-anydpi/ic_criminal_return.xml" value="0.2075" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/drawable-xxhdpi/ic_menu_delete_foreground.xml" value="0.2075" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/activity_fragment.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/fragment_crime_list.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/lateral_menu_activity.xml" value="0.3609375" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/log_in_activity.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/modify_user_activity.xml" value="0.17553191489361702" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/nav_header.xml" value="0.16869300911854104" />
-        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/menu_drawer.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/welcome_fragment.xml" value="0.3609375" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/fragment_crime_detail.xml" value="0.33" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/fragment_crime_list.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/menu_drawer.xml" value="0.67" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/mipmap-anydpi-v26/ic_save_round.xml" value="0.2075" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/app/src/main/res/layout/activity_crime_pager.xml" value="0.3609375" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/app/src/main/res/layout/activity_fragment.xml" value="0.3609375" />

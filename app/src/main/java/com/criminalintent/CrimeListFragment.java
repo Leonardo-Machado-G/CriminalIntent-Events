@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +41,7 @@ public class CrimeListFragment extends Fragment {
     private boolean mSubtitleVisible;
     private TextView mNumberCrimes;
     private Button mAddCrime;
+    private UserPOJO m_User;
 
     //Declaro una variable interface para la comunicacion con el fragment
     private Callbacks mCallbacks;
@@ -73,6 +76,26 @@ public class CrimeListFragment extends Fragment {
 
         //Indico que tenemos un menu en este fragment
         setHasOptionsMenu(true);
+
+        //Obtengo el ID del user del fragment
+        UUID userID = (UUID)getArguments().getSerializable(ARG_CRIMELIST_ID);
+
+        //Recorro la lista de users
+        for(int i = 0; i < ObjectLab.get(getActivity()).getList("users").size(); i++){
+
+            //Comparo el UUID de la lista con el obtenido del intent
+            if(((UserPOJO)ObjectLab
+                    .get(getActivity())
+                    .getList("users")
+                    .get(i)).getIdUser()
+                    .equals(userID)){
+
+                //Obtengo el usuario de la lista
+                this.m_User = (UserPOJO)ObjectLab.get(getActivity()).getList("users").get(i);
+
+            }
+
+        }
 
     }
 
@@ -157,15 +180,12 @@ public class CrimeListFragment extends Fragment {
         //Indico el recyclerview como se van a disponer las view
         this.mCrimeRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
 
-        //Obtengo un crimelab
-        ObjectLab objectLab = ObjectLab.get(getActivity());
-
         //Instancio una lista de crime
         List<CrimePOJO> crimes = new ArrayList<>();
 
         //Añadimos los crimes a la lista
-        for(int i = 0; i < objectLab.getList("crimes").size() ; i++){
-            crimes.add((CrimePOJO) objectLab.getList("crimes").get(i));
+        for(int i = 0; i < ObjectLab.get(getActivity()).getList("crimes").size() ; i++){
+            crimes.add((CrimePOJO) ObjectLab.get(getActivity()).getList("crimes").get(i));
         }
 
         //Inserto en el adapter los crimes
@@ -194,8 +214,6 @@ public class CrimeListFragment extends Fragment {
             }
 
         });
-
-
         return view;
 
     }
@@ -220,14 +238,18 @@ public class CrimeListFragment extends Fragment {
             crimes.add((CrimePOJO) objectLab.getList("crimes").get(i));
         }
 
-        //Si hay elementos en la lista hacemos invisible el textview
-        if(crimes.size() == 0){
+        //Si hay elementos en la lista hacemos invisible el textview y el tipo de user es uno en concreto
+        if(crimes.size() == 0
+                && this.m_User.getTypeUser() != TypeUser.TYPE_ADMIN
+                && this.m_User.getTypeUser() != TypeUser.TYPE_CLIENT){
 
             //Indico al comienzo que este visible
             this.mNumberCrimes.setVisibility(View.VISIBLE);
             this.mAddCrime.setVisibility(View.VISIBLE);
 
-        } else {
+        } else if (crimes.size() != 0
+                && this.m_User.getTypeUser() != TypeUser.TYPE_ADMIN
+                && this.m_User.getTypeUser() != TypeUser.TYPE_CLIENT) {
 
             //Indico al comienzo que este visible
             this.mNumberCrimes.setVisibility(View.INVISIBLE);
@@ -275,6 +297,14 @@ public class CrimeListFragment extends Fragment {
         subtitleItem = this.mSubtitleVisible ?
                 subtitleItem.setTitle(R.string.hide_subtitle):
                 subtitleItem.setTitle(R.string.show_subtitle);
+
+        //Si el tipo de usuario es client o admin oculto botones
+        if(this.m_User.getTypeUser() == TypeUser.TYPE_CLIENT ||
+           this.m_User.getTypeUser() == TypeUser.TYPE_ADMIN){
+            menu.findItem(R.id.new_crime).setVisible(false);
+        } else{
+            menu.findItem(R.id.new_crime).setVisible(true);
+        }
 
     }
 

@@ -200,6 +200,10 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
                 finish();
                 return true;
 
+            case R.id.return_button:
+                finish();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
 

@@ -24,6 +24,9 @@ import java.util.UUID;
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         CrimeListFragment.Callbacks, CrimeFragment.Callbacks {
 
+    //
+    private static String SAVED_INSTANCE_ID = "saved_ID";
+
     //Declaramos un ID del usuario
     private UserPOJO m_User;
 
@@ -95,7 +98,9 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             this.m_NavigationView.getMenu().findItem(R.id.drawer_crimes).setVisible(true);
         }
 
-        Log.d("",this.m_User.toString());
+        //Selecciono el fragment home y lo marco como seleccionado
+        this.m_NavigationView.setCheckedItem(R.id.drawer_home);
+        selectFirstFragment();
 
     }
 
@@ -108,6 +113,9 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.drawer_home:
 
+                //Cambio el fragment actual por el de crimelist
+                selectFirstFragment();
+
                 break;
 
             case R.id.drawer_settings:
@@ -117,7 +125,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.drawer_crimes:
 
-                //
+                //Cambio el fragment actual por el de crimelist
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.activity_main_frame_layout,
@@ -127,12 +135,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.drawer_users:
-                //
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.activity_main_frame_layout,
-                                CrimeListFragment.newInstance(this.m_User.getIdUser()))
-                        .commit();
+
+
 
                 break;
 
@@ -144,6 +148,18 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         //Cerramos el drawer
         this.m_DrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //Metodo para seleccionar el primer fragment
+    private void selectFirstFragment(){
+
+        //Cambio el fragment actual por el de crimelist
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.activity_main_frame_layout,
+                        WelcomeFragment.newInstance(this.m_User.getIdUser()))
+                .commit();
+
     }
 
     //Metodo para configurar la toolbar
@@ -211,7 +227,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     .commit();
 
         }
-
 
     }
 

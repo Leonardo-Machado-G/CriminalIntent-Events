@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:fontFamily="cursive"
+        android:textColor="@color/white"
+        android:textSize="@dimen/padding_title_user"
+        android:text="@string/welcome_text_view"/>
+
+    <ImageView
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/eventolandia"/>
+
+    <TextView
+
+        android:id="@+id/welcome_user_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/padding_text_user"
+        android:text="@string/administrator_text_view"
+        android:gravity="center"
+        android:fontFamily="cursive"
+        android:textColor="@color/white"
+        android:textSize="@dimen/padding_title_user"/>
+
+</LinearLayout>

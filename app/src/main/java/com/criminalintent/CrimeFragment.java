@@ -51,7 +51,7 @@ public class CrimeFragment extends Fragment {
     //Creamos la variable que implementara la interface
     private Callbacks mCallbacks;
 
-    /*Interface requerida para las activity que quieran albergar un fragment.*/
+    //Interface requerida para las activity que quieran albergar un fragment
     public interface Callbacks{
         void onCrimeUpdated(CrimePOJO crime);
     }

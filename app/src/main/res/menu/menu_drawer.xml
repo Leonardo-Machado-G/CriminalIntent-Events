@@ -12,7 +12,7 @@
 
             android:id="@+id/drawer_home"
             android:icon="@drawable/ic_home"
-            android:title="Home"/>
+            android:title="@string/home_fragment_button"/>
 
     </group>
 
@@ -26,19 +26,19 @@
 
                     android:id="@+id/drawer_settings"
                     android:icon="@drawable/ic_configuration"
-                    android:title="Configuration"/>
+                    android:title="@string/configuration_fragment_button"/>
 
                 <item
 
                     android:id="@+id/drawer_crimes"
                     android:icon="@drawable/ic_crimes"
-                    android:title="Crimes"/>
+                    android:title="@string/crimes_fragment_button"/>
 
                 <item
 
                     android:icon="@drawable/ic_users"
                     android:id="@+id/drawer_users"
-                    android:title="Users"/>
+                    android:title="@string/users_fragment_button"/>
 
             </group>
 
