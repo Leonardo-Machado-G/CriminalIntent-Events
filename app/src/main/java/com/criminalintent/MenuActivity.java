@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -56,6 +57,18 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         //Configuramos nuestro drawerLayout
         configureDrawerLayout();
 
+        //Cambiamos los items del menu
+        updateNavigationView();
+
+        //Selecciono el fragment home y lo marco como seleccionado
+        this.m_NavigationView.setCheckedItem(R.id.drawer_home);
+        selectFirstFragment();
+
+    }
+
+    //Metodo para actualizar la view cuando regresemos
+    private void updateNavigationView(){
+
         //Obtenemos el ID del usuario
         UUID userID = UUID.fromString(getIntent().getStringExtra(LogInActivity.ARG_USER_ID));
 
@@ -97,12 +110,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             this.m_NavigationView.getMenu().findItem(R.id.drawer_users).setVisible(true);
             this.m_NavigationView.getMenu().findItem(R.id.drawer_crimes).setVisible(true);
         }
-
-        //Selecciono el fragment home y lo marco como seleccionado
-        this.m_NavigationView.setCheckedItem(R.id.drawer_home);
-        selectFirstFragment();
-
-        Log.d("",""+this.m_User.toString());
 
     }
 
@@ -222,24 +229,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onCrimeSelected(CrimePOJO crime) {
 
-        //Comprobamos si existe un detail_fragment_container
-        if(findViewById(R.id.detail_fragment_container) == null){
-
-            //Instanciamos un CrimePagerActivity con un ID
-            startActivity(CrimePagerActivity.newIntent(this, crime.getId()));
-
-        }else{
-
-            //Instaciamos un crimefragment con un ID
-            Fragment newDetail = CrimeFragment.newInstance(crime.getId());
-
-            //Reemplazamos el anterior por un nuevo fragment
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.detail_fragment_container, newDetail)
-                    .commit();
-
-        }
+        //Instanciamos un CrimePagerActivity con un ID
+        startActivity(CrimePagerActivity.newIntent(this, crime.getId(), this.m_User.getIdUser()));
 
     }
 
@@ -256,9 +247,17 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
+    //Metodo para instanciar un useractivity
     @Override
     public void onUserSelected(UserPOJO user) {
+        startActivity(UserActivity.newIntent(this,user.getIdUser()));
+    }
+
+    //Metodo que se actualiza al regresar a la vista
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateNavigationView();
 
     }
 

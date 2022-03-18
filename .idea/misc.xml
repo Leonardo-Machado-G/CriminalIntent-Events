@@ -7,10 +7,18 @@
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/drawable-xxhdpi/ic_menu_delete_foreground.xml" value="0.2075" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/activity_crime_pager.xml" value="0.3609375" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/activity_fragment.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/activity_lateral_menu.xml" value="0.1671195652173913" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/activity_twopane.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/activity_user.xml" value="0.25677083333333334" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/add_user_activity.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/dialog_date.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/dialog_time.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/edit_user_activity.xml" value="0.3609375" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/fragment_crime.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/fragment_crime_list.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/fragment_tablayout.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/fragment_users_list.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/fragment_users_pager.xml" value="0.3609375" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/lateral_menu_activity.xml" value="0.3609375" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/list_item_crime.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/list_item_user.xml" value="0.18229166666666666" />
@@ -19,8 +27,12 @@
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/nav_header.xml" value="0.16869300911854104" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/layout/welcome_fragment.xml" value="0.3609375" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/fragment_crime_detail.xml" value="0.33" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/fragment_crime_detail_menu.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/fragment_crime_list.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/fragment_user.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/fragment_user_menu.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/fragment_user_pager.xml" value="0.3609375" />
+        <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/fragment_user_pager_menu.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/menu/menu_drawer.xml" value="0.67" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/CriminalIntent_Events/app/src/main/res/mipmap-anydpi-v26/ic_save_round.xml" value="0.2075" />
         <entry key="..\:/Users/leosl/AndroidStudioProjects/app/src/main/res/layout/activity_crime_pager.xml" value="0.3609375" />

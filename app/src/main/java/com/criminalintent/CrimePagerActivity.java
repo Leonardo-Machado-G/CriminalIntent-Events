@@ -21,6 +21,8 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
 
     //Declaro una lista, viewpager y una variable para obtener el id del crime
     private static final String EXTRA_CRIME_ID = "crime_id";
+    private static final String EXTRA_USER_ID = "user_id";
+
     private ViewPager2 mViewPager;
     private List<CrimePOJO> mCrimes;
 
@@ -30,6 +32,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
 
     //Definimos un UUID inicial del que partimos
     private UUID crimeId;
+    private UserPOJO m_User;
 
     //Metodo que se ejecuta segun el ciclo de vida del fragment
     @Override
@@ -44,6 +47,18 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
 
         //Definimos un UUID obtengo del intent
         this.crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
+        UUID userID = (UUID) getIntent().getSerializableExtra(EXTRA_USER_ID);
+
+        //Recorro la lista de users
+        for(int i = 0 ; i < ObjectLab.get(this).getList("users").size() ; i++){
+
+            //Si encuentro el User lo asocio a su variable
+            if(((UserPOJO)ObjectLab.get(this).getList("users").get(i)).getIdUser().equals(userID)){
+                this.m_User = (UserPOJO)ObjectLab.get(this).getList("users").get(i);
+                break;
+            }
+
+        }
 
         //Asociamos los widgets locales a sus view mediante su ID
         this.buttonStart = (Button) findViewById(R.id.button_start);
@@ -92,7 +107,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
 
             //Metodo llamado para crear los fragments en funcion de la posicion
             public Fragment createFragment(int position) {
-                return CrimeFragment.newInstance(mCrimes.get(position).getId());
+                return CrimeFragment.newInstance(mCrimes.get(position).getId(),CrimePagerActivity.this.m_User.getIdUser());
             }
 
             //Defino la cantidad de views
@@ -173,14 +188,28 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
     }
 
     //Metodo para ejecutar la fragmentactivity con un ID en el intent
-    public static Intent newIntent(Context packageContext, UUID crimeId){
-        return new Intent(packageContext,CrimePagerActivity.class).putExtra(EXTRA_CRIME_ID,crimeId);
+    public static Intent newIntent(Context packageContext, UUID crimeId, UUID userID){
+        Intent intent = new Intent(packageContext,CrimePagerActivity.class);
+        intent.putExtra(EXTRA_CRIME_ID,crimeId);
+        intent.putExtra(EXTRA_USER_ID,userID);
+        return intent;
     }
 
     //Defino el menu que se va a cargar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.fragment_crime_detail,menu);
+        getMenuInflater().inflate(R.menu.fragment_crime_detail_menu,menu);
+
+        //Obtengo el item delete crime para ocultarlo o mostrarlo
+        MenuItem itemDelete = menu.findItem(R.id.delete_crime_menu);
+
+        //Si el tipo de usuario es client o admin oculto botones
+        if(this.m_User.getTypeUser() == TypeUser.TYPE_CLIENT ||
+                this.m_User.getTypeUser() == TypeUser.TYPE_ADMIN){
+            itemDelete.setVisible(false);
+        } else{
+            itemDelete.setVisible(true);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -191,7 +220,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
         //Defino un swich para definir el comportamiento del menu
         switch (item.getItemId()){
 
-            case R.id.delete_crime:
+            case R.id.delete_crime_menu:
 
                 //Borro el crimen seleccionado
                 ObjectLab.get(this).deleteObject((CrimePOJO) ObjectLab.get(this).getObject(this.crimeId,"crimes"), null);
@@ -213,8 +242,5 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
 
     //Metodo para actualizar el fragment heredado
     @Override
-    public void onCrimeUpdated(CrimePOJO crime) {
-
-    }
-
+    public void onCrimeUpdated(CrimePOJO crime) {}
 }

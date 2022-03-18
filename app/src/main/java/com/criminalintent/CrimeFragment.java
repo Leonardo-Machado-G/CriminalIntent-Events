@@ -58,6 +58,7 @@ public class CrimeFragment extends Fragment {
 
     //Instancio constantes para el intercambio de datos
     private static final String ARG_CRIME_ID = "crime_id";
+    private static final String ARG_USER_ID = "user_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final String DIALOG_TIME = "DialogTime";
 
@@ -72,6 +73,9 @@ public class CrimeFragment extends Fragment {
 
     //Constante para la peticion del timepicker
     private static final int REQUEST_TIME = 3;
+
+    //Declaro un user
+    private UserPOJO m_User;
 
     //Metodo para obtener el contexto tras introducir el fragment
     @Override
@@ -88,9 +92,10 @@ public class CrimeFragment extends Fragment {
     }
 
     //Metodo para instanciar un fragment con un ID
-    public static CrimeFragment newInstance(UUID crimeId){
+    public static CrimeFragment newInstance(UUID crimeId, UUID userID){
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID,crimeId);
+        args.putSerializable(ARG_USER_ID,userID);
         CrimeFragment fragment = new CrimeFragment();
         fragment.setArguments(args);
         return fragment;
@@ -103,6 +108,18 @@ public class CrimeFragment extends Fragment {
 
         //Instancio un ID obteniendo el ID del intent
         UUID crimeId = (UUID)getArguments().getSerializable(ARG_CRIME_ID);
+        UUID userID = (UUID)getArguments().getSerializable(ARG_USER_ID);
+
+        //Recorro la lista de usuarios
+        for(int i = 0 ; i < ObjectLab.get(getActivity()).getList("users").size() ; i++){
+
+            //Si encuentro el User lo asocio a su variable
+            if(((UserPOJO)ObjectLab.get(getActivity()).getList("users").get(i)).getIdUser().equals(userID)){
+                this.m_User = (UserPOJO)ObjectLab.get(getActivity()).getList("users").get(i);
+                break;
+            }
+
+        }
 
         //Obtengo un crime de crimelab
         this.mCrime = (CrimePOJO) ObjectLab.get(getActivity()).getObject(crimeId,"crimes");
@@ -148,158 +165,163 @@ public class CrimeFragment extends Fragment {
         //Codigo para dar comportamiento al boton
         final Intent pickContact = new Intent(Intent.ACTION_PICK,ContactsContract.Contacts.CONTENT_URI);
 
-        //Defino los comportamientos de los widget mediante listener
-        this.mPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //Si el usuario es client no definimos los listener para que no se puedan modificar los datos
+        if(this.m_User.getTypeUser() != TypeUser.TYPE_CLIENT){
 
-                //Obtengo el file provider mediante el standard RFC 2396 y le asocio el archivo
-                Uri uri = FileProvider.getUriForFile(getActivity(),
-                        "com.criminalintent.fileprovider",
-                        mPhotoFile);
+            //Defino los comportamientos de los widget mediante listener
+            this.mPhotoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                //Inserto en el intent el provider
-                //MediaStore provee una coleccion indexada de medios como audio, imagenes
-                //Contiene definiciones para URI es el contrato entre el proveedor de medios y las aplicaciones
-                captureImage.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+                    //Obtengo el file provider mediante el standard RFC 2396 y le asocio el archivo
+                    Uri uri = FileProvider.getUriForFile(getActivity(),
+                            "com.criminalintent.fileprovider",
+                            mPhotoFile);
 
-                //Informacion que es devuelta de un intent, mediante un intentfilter
-                List<ResolveInfo> cameraActivities =
-                        getActivity()
-                        .getPackageManager()//PackManager obtiene el tipo de informacion relacionada con los paquete instalados
-                        .queryIntentActivities( //Query obtiene todas las actividades que puedan realizar el intent
-                                captureImage, //Lo asocio el intent
-                                PackageManager.MATCH_DEFAULT_ONLY); //Establezco un flag para un package
+                    //Inserto en el intent el provider
+                    //MediaStore provee una coleccion indexada de medios como audio, imagenes
+                    //Contiene definiciones para URI es el contrato entre el proveedor de medios y las aplicaciones
+                    captureImage.putExtra(MediaStore.EXTRA_OUTPUT,uri);
 
-                //Recorro la lista de resolveinfo
-                for(ResolveInfo activity : cameraActivities){
+                    //Informacion que es devuelta de un intent, mediante un intentfilter
+                    List<ResolveInfo> cameraActivities =
+                            getActivity()
+                                    .getPackageManager()//PackManager obtiene el tipo de informacion relacionada con los paquete instalados
+                                    .queryIntentActivities( //Query obtiene todas las actividades que puedan realizar el intent
+                                            captureImage, //Lo asocio el intent
+                                            PackageManager.MATCH_DEFAULT_ONLY); //Establezco un flag para un package
 
-                    getActivity() //Contexto
-                    .grantUriPermission( //Otorgo permiso temporal a un URI
-                            activity.activityInfo.packageName, //Obtengo el nombre del paquete del resolveinfo
-                            uri, //Asocio el fileprovider
-                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION); //Flag de permiso de escritura
+                    //Recorro la lista de resolveinfo
+                    for(ResolveInfo activity : cameraActivities){
+
+                        getActivity() //Contexto
+                                .grantUriPermission( //Otorgo permiso temporal a un URI
+                                        activity.activityInfo.packageName, //Obtengo el nombre del paquete del resolveinfo
+                                        uri, //Asocio el fileprovider
+                                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION); //Flag de permiso de escritura
+
+                    }
+
+                    //Envio la informacion del intent y la variable asociada
+                    startActivityForResult(captureImage,REQUEST_PHOTO);
 
                 }
 
-                //Envio la informacion del intent y la variable asociada
-                startActivityForResult(captureImage,REQUEST_PHOTO);
+            });
+            this.mTitleField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-            }
+                //Metodo que se ejecuta cuando cambia el valor del edittext
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    mCrime.setTitle(s.toString());
+                    updateCrime();
+                }
 
-        });
-        this.mTitleField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override
+                public void afterTextChanged(Editable s) {}
 
-            //Metodo que se ejecuta cuando cambia el valor del edittext
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCrime.setTitle(s.toString());
-                updateCrime();
-            }
+            });
+            this.mDateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            @Override
-            public void afterTextChanged(Editable s) {}
+                    //Instancio un fragmentmanager del padre
+                    FragmentManager fragmentManager = getParentFragmentManager();
 
-        });
-        this.mDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    //Instancio un datepicker mediante la fecha del crime
+                    DatePickerFragment dialog = DatePickerFragment.newInstante(mCrime.getDate());
 
-                //Instancio un fragmentmanager del padre
-                FragmentManager fragmentManager = getParentFragmentManager();
+                    //Establecemos el fragment destino
+                    dialog.setTargetFragment(CrimeFragment.this,REQUEST_DATE);
 
-                //Instancio un datepicker mediante la fecha del crime
-                DatePickerFragment dialog = DatePickerFragment.newInstante(mCrime.getDate());
+                    //Muestro el datepicker
+                    dialog.show(fragmentManager,DIALOG_DATE);
+                }
 
-                //Establecemos el fragment destino
-                dialog.setTargetFragment(CrimeFragment.this,REQUEST_DATE);
+            });
+            this.mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                //Muestro el datepicker
-                dialog.show(fragmentManager,DIALOG_DATE);
-            }
+                    //Cambio la variable del crime y lo actualizo
+                    mCrime.setSolved(isChecked);
+                    updateCrime();
+                }
 
-        });
-        this.mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            });
+            this.mReportButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                //Cambio la variable del crime y lo actualizo
-                mCrime.setSolved(isChecked);
-                updateCrime();
-            }
+                    //Instancio un intent con la accion send
+                    Intent intent = new Intent(Intent.ACTION_SEND);
 
-        });
-        this.mReportButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    //Defino un tipo de dato MIME
+                    intent.setType("text/plain");
 
-                //Instancio un intent con la accion send
-                Intent intent = new Intent(Intent.ACTION_SEND);
+                    //Inserto el reporte en el texto
+                    intent.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
 
-                //Defino un tipo de dato MIME
-                intent.setType("text/plain");
+                    //Inserto el sujeto
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.crime_report_subject));
 
-                //Inserto el reporte en el texto
-                intent.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
+                    //Creamos un chooser para que aparezcan opciones de eleccion
+                    intent = Intent.createChooser(intent,getString(R.string.send_report));
+                    startActivity(intent);
 
-                //Inserto el sujeto
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.crime_report_subject));
+                }
 
-                //Creamos un chooser para que aparezcan opciones de eleccion
-                intent = Intent.createChooser(intent,getString(R.string.send_report));
-                startActivity(intent);
+            });
+            this.mSuspectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            }
+                    //Envio el intent y el valor de su variable asociada
+                    startActivityForResult(pickContact,REQUEST_CONTACT);
 
-        });
-        this.mSuspectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                }
 
-                //Envio el intent y el valor de su variable asociada
-                startActivityForResult(pickContact,REQUEST_CONTACT);
+            });
+            this.mSuspectField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
-            }
+                //Metodo para detectar el cambio del widget
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        });
-        this.mSuspectField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+                    //Establezco el valor del sospechoso
+                    mCrime.setSuspect(charSequence.toString());
 
-            //Metodo para detectar el cambio del widget
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
 
-                //Establezco el valor del sospechoso
-                mCrime.setSuspect(charSequence.toString());
+                @Override
+                public void afterTextChanged(Editable editable) {}
 
-            }
+            });
+            this.mTimeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-            @Override
-            public void afterTextChanged(Editable editable) {}
+                    //Instancio un fragmentmanager  para administrar los fragment
+                    FragmentManager fragmentManager = getParentFragmentManager();
 
-        });
-        this.mTimeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    //Defino un nuevo fragment que sera un dialogo para timepicker
+                    TimerPickerFragment dialog = TimerPickerFragment.newIntance(mCrime.getDate());
 
-                //Instancio un fragmentmanager  para administrar los fragment
-                FragmentManager fragmentManager = getParentFragmentManager();
+                    //Define la relación llamador / llamado entre 2 fragmentos
+                    dialog.setTargetFragment(CrimeFragment.this,REQUEST_TIME);
 
-                //Defino un nuevo fragment que sera un dialogo para timepicker
-                TimerPickerFragment dialog = TimerPickerFragment.newIntance(mCrime.getDate());
+                    //Llamamos al metodo para crear el dialog y mostrarlo
+                    dialog.show(fragmentManager,DIALOG_TIME);
 
-                //Define la relación llamador / llamado entre 2 fragmentos
-                dialog.setTargetFragment(CrimeFragment.this,REQUEST_TIME);
+                }
 
-                //Llamamos al metodo para crear el dialog y mostrarlo
-                dialog.show(fragmentManager,DIALOG_TIME);
+            });
 
-            }
-
-        });
+        }
 
         //Retorno la view
         return view;

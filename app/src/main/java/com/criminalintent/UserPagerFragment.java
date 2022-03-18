@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -91,20 +91,45 @@ public class UserPagerFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.text_view_type_org_admin)));
         tabLayout.setTabGravity(tabLayout.GRAVITY_FILL);
 
-        //
+        //Le doy un comportamiento al tablayout para cambiar la pestaña
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                UserPagerFragment.this.m_ViewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
+
+        //Asignamos un adapter al viewpager
         this.m_ViewPager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return UserListFragment.newInstance(UserPagerFragment.this.m_User.getIdUser());
+
+                if(position == 0){
+                    return UserListFragment.newInstance(TypeUser.TYPE_CLIENT);
+                }else if(position == 1) {
+                    return UserListFragment.newInstance(TypeUser.TYPE_ORG);
+                } else if(position == 2) {
+                    return UserListFragment.newInstance(TypeUser.TYPE_ADMIN);
+                } else if(position == 3) {
+                    return UserListFragment.newInstance(TypeUser.TYPE_ORG_ADMIN);
+                }
+                return new Fragment();
             }
 
+            //Definimos el numero de pestañas del viewpager
             @Override
             public int getItemCount() {
                 return 4;
             }
+
         });
 
+        //Le doy un comportamiento al viewpager al cambiar la pagina
         this.m_ViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -112,15 +137,17 @@ public class UserPagerFragment extends Fragment {
             }
 
             @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-            }
+            public void onPageSelected(int position) {super.onPageSelected(position); }
 
             @Override
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
+
+                //Cambio el tab actual
                 tabLayout.selectTab(tabLayout.getTabAt(m_ViewPager.getCurrentItem()));
+
             }
+
         });
 
         //Retorno la view
@@ -131,7 +158,7 @@ public class UserPagerFragment extends Fragment {
     //Metodo que se ejecuta para asociar un menu a la view
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.fragment_user_pager,menu);
+        getActivity().getMenuInflater().inflate(R.menu.fragment_user_pager_menu,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -144,8 +171,19 @@ public class UserPagerFragment extends Fragment {
 
             case R.id.new_pager_user:
 
-                Toast.makeText(getContext(), "Insert item", Toast.LENGTH_SHORT).show();
+                UserPOJO user = new UserPOJO(TypeUser.TYPE_CLIENT,
+                                    "nodefined",
+                                    "nodefined@hotmail",
+                                    "nodefined",
+                                             R.mipmap.ic_launcher_round);
+
+                //Añado el objeto por defecto vacio
+                ObjectLab.get(getContext()).addObject(null,user);
+
+                //Instancio una activity con el nuevo user
+                startActivity(UserActivity.newIntent(getActivity(),user.getIdUser()));
                 return true;
+
         }
         return super.onOptionsItemSelected(item);
 

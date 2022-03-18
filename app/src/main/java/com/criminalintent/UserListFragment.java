@@ -5,6 +5,7 @@ package com.criminalintent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,15 +37,20 @@ public class UserListFragment extends Fragment {
     //Declaro los widget necesarios
     private RecyclerView m_UserRecyclerView;
     private UserAdapter m_Adapter;
-    private UserPOJO m_User;
+
+    //Variable que determinara que tipo de lista es
+    private TypeUser m_TypeUser;
 
     //Declaro una interface para comunicarse con los users
     private CallUser m_CallUser;
 
-    //Metodo para instanciar un fragment con un ID
-    public static UserListFragment newInstance(UUID userId){
+    //
+    private List<UserPOJO>users;
+
+    //Metodo para instanciar un fragment con typeuser
+    public static UserListFragment newInstance(TypeUser typeUser){
         Bundle args = new Bundle();
-        args.putSerializable(ARG_USERLIST_ID,userId);
+        args.putSerializable(ARG_USERLIST_ID,typeUser);
         UserListFragment fragment = new UserListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -55,25 +61,8 @@ public class UserListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Obtengo el ID del user del fragment
-        UUID userID = (UUID)getArguments().getSerializable(ARG_USERLIST_ID);
-
-        //Recorro la lista de users
-        for(int i = 0; i < ObjectLab.get(getActivity()).getList("users").size(); i++){
-
-            //Comparo el UUID de la lista con el obtenido del intent
-            if(((UserPOJO)ObjectLab
-                    .get(getActivity())
-                    .getList("users")
-                    .get(i)).getIdUser()
-                    .equals(userID)){
-
-                //Obtengo el usuario de la lista
-                this.m_User = (UserPOJO)ObjectLab.get(getActivity()).getList("users").get(i);
-
-            }
-
-        }
+        //Obtengo el typeuser del fragment
+        this.m_TypeUser = (TypeUser)getArguments().getSerializable(ARG_USERLIST_ID);
 
     }
 
@@ -91,13 +80,8 @@ public class UserListFragment extends Fragment {
         //Indico el recyclerview como se van a disponer las view
         this.m_UserRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //Instancio una lista de user
-        List<UserPOJO> users = new ArrayList<>();
-
-        //Añadimos los users a la lista
-        for(int i = 0; i < ObjectLab.get(getActivity()).getList("users").size() ; i++){
-            users.add((UserPOJO) ObjectLab.get(getActivity()).getList("users").get(i));
-        }
+        //Llamo al metodo para actualizar la lista de users
+        updateList();
 
         //Inserto en el adapter los crimes
         this.m_Adapter = new UserAdapter(users);
@@ -119,33 +103,76 @@ public class UserListFragment extends Fragment {
     //Metodo que actualiza nuestra UI
     public void updateUI(){
 
-        //Instancio un objectlab
-        ObjectLab objectLab = ObjectLab.get(getActivity());
-
-        //Instancio una lista de users
-        List<UserPOJO> users = new ArrayList<>();
-
-        //Añadimos los users a la lista
-        for(int i = 0; i < objectLab.getList("users").size() ; i++){
-            users.add((UserPOJO) objectLab.getList("users").get(i));
-        }
+        //Llamo al metodo para actualizar la lista de users
+        updateList();
 
         //Si el adapter es nulo accedemos
         if(this.m_Adapter == null){
 
             //Creamos un nuevo adapter y le insertamos los users
-            this.m_Adapter = new UserAdapter(users);
+            this.m_Adapter = new UserAdapter(this.users);
 
             //Asociamos el adapter a la recyclerview
-            this.m_UserRecyclerView.setAdapter(m_Adapter);
+            this.m_UserRecyclerView.setAdapter(this.m_Adapter);
 
         }else{
 
             //Actualizamos la lista que debe usar el adaptador para mostrar los crimenes
-            this.m_Adapter.setUsers(users);
+            this.m_Adapter.setUsers(this.users);
 
             //Notificamos que ha habido un cambio en los datos
             this.m_Adapter.notifyDataSetChanged();
+
+        }
+
+    }
+
+    //Metodo que rellena la lista de users
+    private void updateList(){
+
+        //Instancio una lista de user
+        this.users = new ArrayList<>();
+
+        //Añadimos los users a la lista en funcion de su tipo y el tipo de lista
+        for(int i = 0; i < ObjectLab.get(getActivity()).getList("users").size() ; i++){
+
+            //Si este tipo de lista es client y el objeto obtenido de la lista es client, lo añadimos a la lista
+            if(this.m_TypeUser == TypeUser.TYPE_CLIENT &&
+                    ((UserPOJO) ObjectLab.get(getActivity())
+                            .getList("users")
+                            .get(i))
+                            .getTypeUser() == TypeUser.TYPE_CLIENT){
+
+                users.add((UserPOJO) ObjectLab.get(getActivity()).getList("users").get(i));
+
+            }
+            else if(this.m_TypeUser == TypeUser.TYPE_ORG &&
+                    ((UserPOJO) ObjectLab.get(getActivity())
+                            .getList("users")
+                            .get(i))
+                            .getTypeUser() == TypeUser.TYPE_ORG){
+
+                users.add((UserPOJO) ObjectLab.get(getActivity()).getList("users").get(i));
+
+            }
+            else if(this.m_TypeUser == TypeUser.TYPE_ADMIN &&
+                    ((UserPOJO) ObjectLab.get(getActivity())
+                            .getList("users")
+                            .get(i))
+                            .getTypeUser() == TypeUser.TYPE_ADMIN){
+
+                users.add((UserPOJO) ObjectLab.get(getActivity()).getList("users").get(i));
+
+            }
+            else if(this.m_TypeUser == TypeUser.TYPE_ORG_ADMIN &&
+                    ((UserPOJO) ObjectLab.get(getActivity())
+                            .getList("users")
+                            .get(i))
+                            .getTypeUser() == TypeUser.TYPE_ORG_ADMIN){
+
+                users.add((UserPOJO) ObjectLab.get(getActivity()).getList("users").get(i));
+
+            }
 
         }
 

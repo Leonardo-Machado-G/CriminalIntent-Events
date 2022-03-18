@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+
+        android:title="@string/return_menu"
+        android:id="@+id/return_button"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_criminal_return"/>
+
+    <item
+
+        android:id="@+id/delete_crime_menu"
+        android:icon="@drawable/ic_menu_delete_foreground"
+        android:title="@string/delete_crime"
+        app:showAsAction="ifRoom|withText"/>
+
+</menu>

@@ -74,5 +74,7 @@
     <string name="new_user">New user</string>
     <string name="type_user_list">"Type user: "</string>
     <string name="name_user_list">"Name user: "</string>
+    <string name="delete_user">Delete user</string>
+    <string name="user_text_view_edit">User</string>
 
 </resources>

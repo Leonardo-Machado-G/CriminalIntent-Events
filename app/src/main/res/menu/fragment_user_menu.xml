@@ -5,17 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-
-        android:title="@string/return_menu"
         android:id="@+id/return_button"
-        app:showAsAction="ifRoom|withText"
-        android:icon="@drawable/ic_criminal_return"/>
+        android:icon="@drawable/ic_criminal_return"
+        android:title="@string/return_menu"
+        app:showAsAction="ifRoom|withText"/>
 
     <item
-
-        android:id="@+id/delete_crime"
+        android:id="@+id/delete_user"
         android:icon="@drawable/ic_menu_delete_foreground"
-        android:title="@string/delete_crime"
+        android:title="@string/delete_user"
         app:showAsAction="ifRoom|withText"/>
 
 </menu>

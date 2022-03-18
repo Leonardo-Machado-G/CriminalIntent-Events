@@ -8,13 +8,13 @@
 
     <TextView
 
-        android:id="@+id/textView_User"
+        android:id="@+id/textView_User_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
         android:gravity="center"
-        android:padding="@dimen/padding_title_user"
-        android:text="@string/add_user_text_view"
+        android:padding="@dimen/padding_text_user"
+        android:text="@string/user_text_view_edit"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_title_user"
         android:textStyle="bold"
@@ -24,13 +24,13 @@
 
     <LinearLayout
 
-        android:id="@+id/linearLayout_user"
+        android:id="@+id/linearLayout_user_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_User">
+        app:layout_constraintTop_toBottomOf="@+id/textView_User_edit">
 
         <TextView
 
@@ -45,9 +45,9 @@
             android:textSize="@dimen/text_size_item"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
 
-            android:id="@+id/user_text_view_content"
+            android:id="@+id/user_text_view_content_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,13 +62,13 @@
 
     <LinearLayout
 
-        android:id="@+id/linearLayout_name"
+        android:id="@+id/linearLayout_name_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_user">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_user_edit">
 
         <TextView
 
@@ -83,9 +83,9 @@
             android:textSize="@dimen/text_size_item"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
 
-            android:id="@+id/name_text_view_content"
+            android:id="@+id/name_text_view_content_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -100,13 +100,13 @@
 
     <LinearLayout
 
-        android:id="@+id/linearLayout_email"
+        android:id="@+id/linearLayout_email_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_name">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_name_edit">
 
         <TextView
 
@@ -121,9 +121,9 @@
             android:textSize="@dimen/text_size_item"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
 
-            android:id="@+id/email_text_view_content"
+            android:id="@+id/email_text_view_content_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -138,13 +138,13 @@
 
     <LinearLayout
 
-        android:id="@+id/linearLayout_password"
+        android:id="@+id/linearLayout_password_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_email">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_email_edit">
 
         <TextView
 
@@ -159,9 +159,9 @@
             android:textSize="@dimen/text_size_item"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
 
-            android:id="@+id/password_text_view_content"
+            android:id="@+id/password_text_view_content_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -176,13 +176,13 @@
 
     <LinearLayout
 
-        android:id="@+id/linearLayout_img"
+        android:id="@+id/linearLayout_img_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_password">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_password_edit">
 
         <TextView
 
@@ -199,7 +199,7 @@
 
         <ImageButton
 
-            android:id="@+id/image_button_select_photo"
+            android:id="@+id/image_button_select_photo_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:src="@mipmap/ic_launcher_round"
@@ -215,13 +215,13 @@
 
     <LinearLayout
 
-        android:id="@+id/linearLayout_type_user"
+        android:id="@+id/linearLayout_type_user_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_img">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_img_edit">
 
         <TextView
 
@@ -238,7 +238,7 @@
 
         <LinearLayout
 
-            android:id="@+id/linearLayout_selection_checkout"
+            android:id="@+id/linearLayout_selection_checkout_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -246,28 +246,28 @@
 
             <CheckBox
 
-                android:id="@+id/client_checkbox"
+                android:id="@+id/client_checkbox_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_view_type_client"/>
 
             <CheckBox
 
-                android:id="@+id/client_checkbox"
+                android:id="@+id/organizer_checkbox_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_view_type_org"/>
 
             <CheckBox
 
-                android:id="@+id/client_checkbox"
+                android:id="@+id/administrator_checkbox_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_view_type_admin"/>
 
             <CheckBox
 
-                android:id="@+id/client_checkbox"
+                android:id="@+id/organizer_administrator_checkbox_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_view_type_org_admin"/>
@@ -278,6 +278,7 @@
 
     <Button
 
+        android:id="@+id/save_button_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
@@ -287,6 +288,5 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         android:drawableLeft="@drawable/ic_save"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -209,7 +208,8 @@ public class CrimeListFragment extends Fragment {
                 //Definimos un nuevo crime, lo añadimos a la lista e iniciamos un intent
                 CrimePOJO crime = new CrimePOJO();
                 ObjectLab.get(getActivity()).addObject(crime, null);
-                Intent intent = CrimePagerActivity.newIntent(getActivity(),crime.getId());
+                Intent intent = CrimePagerActivity.newIntent(getActivity(),crime.getId(),
+                                                             CrimeListFragment.this.m_User.getIdUser());
                 startActivity(intent);
 
             }
@@ -289,7 +289,7 @@ public class CrimeListFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
 
         //Asociamos el menu al fragment
-        inflater.inflate(R.menu.fragment_crime_list,menu);
+        inflater.inflate(R.menu.fragment_crime_list_menu,menu);
 
         //Actualizamos el menu
         MenuItem subtitleItem = menu.findItem(R.id.show_subtitle);
