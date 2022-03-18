@@ -70,5 +70,9 @@
     <string name="configuration_fragment_button">Configuration</string>
     <string name="crimes_fragment_button">Crimes</string>
     <string name="users_fragment_button">Users</string>
+    <string name="no_users">There are no users</string>
+    <string name="new_user">New user</string>
+    <string name="type_user_list">"Type user: "</string>
+    <string name="name_user_list">"Name user: "</string>
 
 </resources>

@@ -157,6 +157,7 @@ public class CrimeListFragment extends Fragment {
 
         }
 
+
         //Metodo que obtiene el tamaño de la lista
         @Override
         public int getItemCount() {return mCrimes.size();}
@@ -227,7 +228,7 @@ public class CrimeListFragment extends Fragment {
     //Metodo que actualiza nuestra UI
     public void updateUI(){
 
-        //Instancio un crimelab
+        //Instancio un objectlab
         ObjectLab objectLab = ObjectLab.get(getActivity());
 
         //Instancio una lista de crime

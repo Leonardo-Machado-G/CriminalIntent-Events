@@ -14,10 +14,11 @@
         android:layout_height="wrap_content"
         android:text="@string/user_list_fragment_tab"
         android:textColor="@color/black"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:padding="@dimen/padding_title_user"
         android:textSize="@dimen/text_size_title_user"
         android:textStyle="bold"
+        android:background="#e2e2e2"
         android:fontFamily="serif"/>
 
     <com.google.android.material.tabs.TabLayout
@@ -25,14 +26,14 @@
         android:id="@+id/fragment_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#B6C9F1"
+        android:background="#e2e2e2"
         app:tabIndicatorColor="@color/design_default_color_on_primary"
-        app:tabTextColor="#D4E0F8"
-        app:tabSelectedTextColor="#fff"/>
+        app:tabTextColor="@color/black"
+        app:tabSelectedTextColor="#808080"/>
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
 
-        android:id="@+id/fragment_tab_viewpager"
+        android:id="@+id/viewpager_user_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -22,9 +22,9 @@ import java.util.UUID;
 
 //Declaramos la clase y heredamos
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        CrimeListFragment.Callbacks, CrimeFragment.Callbacks {
+        CrimeListFragment.Callbacks, CrimeFragment.Callbacks, UserListFragment.CallUser {
 
-    //
+    //Instancio una varaible para intercambiar informacion
     private static String SAVED_INSTANCE_ID = "saved_ID";
 
     //Declaramos un ID del usuario
@@ -144,7 +144,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.drawer_users:
 
-
+                //Cambio el fragment actual por el de crimelist
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.activity_main_frame_layout,
+                                UserPagerFragment.newInstance(this.m_User.getIdUser()))
+                        .commit();
 
                 break;
 
@@ -248,6 +253,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         //Actualizamos su UI
         listFragment.updateUI();
+
+    }
+
+
+    @Override
+    public void onUserSelected(UserPOJO user) {
 
     }
 

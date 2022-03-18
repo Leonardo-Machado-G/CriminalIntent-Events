@@ -39,7 +39,7 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
         //Asocio a la view un layout
         setContentView(R.layout.activity_crime_pager);
 
-        //
+        //Instancio una lista de crimes
         this.mCrimes = new ArrayList<>();
 
         //Definimos un UUID obtengo del intent
